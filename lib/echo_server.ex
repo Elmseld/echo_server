@@ -1,4 +1,9 @@
 defmodule EchoServer do
+  @moduledoc """
+    Super simple server that only handle a couple of atom_calls.
+    Going for the super basics and pushing back the urge to use Genserver.
+    Made to not be able to break, try me please.
+  """
 
   def start() do
     if !(Process.registered() |> Enum.member?(__MODULE__)) do
@@ -34,11 +39,14 @@ defmodule EchoServer do
 
     def mailbox() do
       receive do
-        :hello -> IO.puts("Hi you!")
-        mailbox()
-        :happy -> Quotes.random() |> Map.get("text") |> IO.puts
-        mailbox()
-        :stop  -> IO.puts("YOU KILLED MEEEE")
+        :hello ->
+          IO.puts("Hi you!")
+          mailbox()
+        :happy ->
+          Quotes.random() |> Map.get("text") |> IO.puts()
+          mailbox()
+        :stop  ->
+          IO.puts("YOU KILLED MEEEE")
       end
     end
 end
