@@ -1,16 +1,15 @@
 defmodule EchoServer do
   @moduledoc """
-    Super simple server that only handle a couple of atom_calls.
-    Going for the super basics and pushing back the urge to use Genserver.
-    Made to not be able to break, try me please.
+  Super simple server that only handle a couple of atom_calls.
+
+  Going for the deep basics and pushing back the urge to use Genserver.
+
+  Made to not be able to break, try me please.
   """
 
   def start() do
-    if !(Process.registered() |> Enum.member?(__MODULE__)) do
-      start_server()
-    else
-      IO.puts("You need to murder me first.")
-    end
+    pid = start_a_server()
+    register_the_server(pid)
   end
 
   def stop() do
@@ -32,9 +31,16 @@ defmodule EchoServer do
     end
   end
 
-    def start_server() do
+    def start_a_server() do
       spawn(__MODULE__, :mailbox, [])
-      |> Process.register(__MODULE__)
+    end
+
+    defp register_the_server(pid) do
+      if __MODULE__ not in Process.registered() do
+        Process.register(pid, __MODULE__)
+      else
+        IO.puts("You need to murder me first.")
+      end
     end
 
     def mailbox() do
