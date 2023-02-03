@@ -1,5 +1,9 @@
 defmodule EchoServerMulti do
 
+  @moduledoc """
+    !!! Not even a little bit done don't look at it! I'm embarrassed !!!
+
+  """
   def start(n, m) do
     # if !(Process.registered() |> Enum.member?(__MODULE__)) do
       1..n

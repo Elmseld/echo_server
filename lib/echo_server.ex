@@ -3,7 +3,6 @@ defmodule EchoServer do
   def start() do
     if !(Process.registered() |> Enum.member?(__MODULE__)) do
       start_server()
-      |> Process.register(__MODULE__)
     else
       IO.puts("You need to murder me first.")
     end
@@ -19,7 +18,7 @@ defmodule EchoServer do
   end
 
   defp send_to_server(term) do
-    #Just wanted to try try, this should be an if as in the start-func
+    # Just wanted to try try, this should be an if as in the start-func
     try do
       send(__MODULE__, term)
     rescue
@@ -30,6 +29,7 @@ defmodule EchoServer do
 
     def start_server() do
       spawn(__MODULE__, :mailbox, [])
+      |> Process.register(__MODULE__)
     end
 
     def mailbox() do
