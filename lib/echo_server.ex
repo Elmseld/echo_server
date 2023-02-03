@@ -19,6 +19,7 @@ defmodule EchoServer do
   end
 
   defp send_to_server(term) do
+    #Just wanted to try try, this should be an if as in the start-func
     try do
       send(__MODULE__, term)
     rescue
@@ -28,12 +29,16 @@ defmodule EchoServer do
   end
 
     def start_server() do
-      spawn(fn -> send(__MODULE__,
-        receive do
-          :hello -> IO.puts("Hi you!")
-          :happy -> Quotes.random() |> Map.get("text") |> IO.puts
-          :stop  -> Process.exit(self(), :kill)
-            end)
-      end)
+      spawn(__MODULE__, :mailbox, [])
+    end
+
+    def mailbox() do
+      receive do
+        :hello -> IO.puts("Hi you!")
+        mailbox()
+        :happy -> Quotes.random() |> Map.get("text") |> IO.puts
+        mailbox()
+        :stop  -> IO.puts("YOU KILLED MEEEE")
+      end
     end
 end
