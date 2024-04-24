@@ -1,7 +1,7 @@
 defmodule EchoServerMulti do
 
   @moduledoc """
-    !!! Not even a little bit done don't look at it! I'm embarrassed !!!
+    Create a multiserver
 
   """
   def start(n, m) do
